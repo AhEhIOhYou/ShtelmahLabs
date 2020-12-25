@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
      //Заполняем пустую ячейку пробелом, что было, во всех остальных, делаем тоже самое
      firstTableWidget->setItem(0, 0, new QTableWidgetItem(" "));
      firstTableWidget->setColumnWidth(0, 50);
-     firstTableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
+     firstTableWidget->setEditTriggers(QAbstractItemView::AllEditTriggers);
      firstTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
      firstTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
      secondTableWidget->setColumnCount(1);
      secondTableWidget->setItem(0, 0, new QTableWidgetItem(" "));
      secondTableWidget->setColumnWidth(0,50);
-     secondTableWidget->setEditTriggers(QAbstractItemView::DoubleClicked);
+     secondTableWidget->setEditTriggers(QAbstractItemView::AllEditTriggers);
      secondTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
      secondTableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 
