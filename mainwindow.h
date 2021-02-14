@@ -18,9 +18,7 @@ private:
     QLabel *la_2;
     QLabel *la_3;
     QLabel *number;
-
     QPushButton *act;
-    QLineEdit *inLine;
     QTableWidget *matrix;
 protected:
    virtual void keyPressEvent(QKeyEvent *event);
