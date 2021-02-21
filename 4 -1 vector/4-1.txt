@@ -1,0 +1,244 @@
+/*Дана вещественная матрица A[n][n].
+В каждой строке матрицы все отрицательные элементы разделить на количество нулевых элементов в матрице.
+Отсортировать во всех строках матрицы элементы после главной диагонали по убыванию.
+Добавить к матрице строку, каждый элемент которой равен минимальномуэлементу из заданного диапазона[a, b] соответствующего столбца.
+Найти строку матрицы, в которой последний нулевой элемент имеет максимальный индекс, и удалить ее из матрицы.
+Удалить из матрицы столбец, сумма элементов в котором минимальна.*/
+
+
+#include <vector>
+#include <iostream>
+#include <ctime>
+#include <Windows.h>
+//#include <algorithm>
+
+using namespace std;
+
+//вывод матрицы
+void Show(vector<vector<int> >& dvec) {
+
+	cout << "Матрица А:" << endl;
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size(); j++) {
+			cout << dvec[i][j] << "\t";
+		}
+		cout << endl;
+	}
+}
+
+//нулевое условие - есть матрица A [n x n]
+//заполнение двумерного вектора случайными числами от -9 до 9
+void Fill(vector<vector<int> >& dvec, int size) {
+
+	cout << "Заполняем матрицу. . ." << endl;
+
+	for (int i = 0; i < size; i++) {
+		vector<int> vec;
+		for (int j = 0; j < size; j++) {
+			vec.push_back(rand() % 18 + (-9));
+		}
+		dvec.push_back(vec);
+	}
+
+	Show(dvec);
+	Sleep(2000);
+}
+
+//первое условие - разделить все отрицательные числа на количество нулей в матрице
+void NegativeNumDiv(vector<vector<int> >& dvec) {
+
+	int zeroElements = 1;
+
+	cout << "Поиск нулевых элементов. . ." << endl;
+
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size(); j++) {
+			if (dvec[i][j] == 0) {
+				zeroElements++;
+			}
+		}
+	}
+	cout << "Всего нулевых элементов: " << zeroElements - 1 << endl;
+
+	cout << "Преобразование матрицы. . ." << endl;
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size(); j++) {
+			if (dvec[i][j] < 0) {
+				dvec[i][j] = dvec[i][j] / zeroElements;
+			}
+		}
+	}
+
+	Show(dvec);
+	Sleep(2000);
+}
+
+//второе условие - сортировка элементов строк по убывания после главной диагонали
+void SpecialSort(vector<vector<int> >& dvec) {
+
+	cout << "Соритируем. . ." << endl;
+
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size(); j++) {
+			//условие доступа к элементам после главной диагонали
+			if (j > i) {
+				//сортировка пузырьком для двумерных массивов
+				for (int k = dvec.size() - 1; k > j; k--) {
+					if (dvec[i][k] > dvec[i][k - 1]) {
+						int tmp = dvec[i][k];
+						dvec[i][k] = dvec[i][k - 1];
+						dvec[i][k - 1] = tmp;
+					}
+				}
+			}
+		}
+	}
+
+	Show(dvec);
+	Sleep(2000);
+
+}
+
+//третье условие - добавить строку, которая получается из минимальных элементов каждого столбца из вводимого диапазона [a,b]
+void AddSpecialLine(vector<vector<int> >& dvec) {
+
+	int a = -1, b = -1;
+	cout << "Задай диапазон: " << endl;
+	cout << "Примечание: диапазон от 0 до " << dvec.size()-1 << "!" << endl;
+	cout << "a = ";
+	cin >> a;
+	cout << "b = ";
+	cin >> b;
+
+	cout << "Находим элементы для строки. . ." << endl;
+
+	vector<int> vectorAdd;
+
+
+	int min = 20;
+	for (int j = 0; j < dvec.size(); j++) {
+		for (int i = 0; i < dvec.size(); i++) {
+			//работает в две стороны и с 0..4, и с 4..0
+			if ((i >= a && i <= b) || (i >= b && i <= a)) {
+				if (dvec[i][j] < min) {
+					min = dvec[i][j];
+				}
+			}
+		}
+		vectorAdd.push_back(min);
+		min = 20;
+	}
+
+	cout << "Добавляем строку. . ." << endl;
+
+	dvec.push_back(vectorAdd);
+
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size() - 1; j++) {
+			cout << dvec[i][j] << "\t";
+		}
+		cout << endl;
+	}
+	Sleep(2000);
+
+}
+
+//четвртое условие - удаление строки с маскимальным индексом нулевого элемента
+void DeleteLineMaxZeroElementIndex(vector<vector<int> >& dvec) {
+
+	int maxIndex = -1;
+	int deleteLineIndex = -1;
+
+	cout << endl;
+	cout << "Поиск индекса. . ." << endl;
+	//ищим максимальный индекс нулевого элемента
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size() - 1; j++) {
+			if (dvec[i][j] == 0 && j >= maxIndex) {
+				maxIndex = j;
+				deleteLineIndex = i;
+			}
+		}
+	}
+
+	cout << "Индекс столбца - " << maxIndex << endl;
+	cout << "Удаляемая строка - " << deleteLineIndex << endl;
+
+	cout << "Удаляем. . ." << endl;
+	dvec.erase(dvec.begin() + deleteLineIndex);
+
+	Show(dvec);
+	Sleep(2000);
+}
+
+//пятое условие - удалить столбец с минимальной суммой элеентов
+void DeleteColumnWithMinSum(vector<vector<int> >& dvec) {
+	int minSum = 1000;
+	int deleteColIndex = -1;
+
+	cout << "Поиск индекса. . ." << endl;
+	//считаем для каждого сумму и вычисляем индекс удаляемой строки
+	for (int j = 0; j < dvec.size(); j++) {
+		int sum = 0;
+		for (int i = 0; i < dvec.size(); i++) {
+			sum += dvec[i][j];
+		}
+		if (sum < minSum) {
+			minSum = sum;
+			deleteColIndex = j;
+		}
+	}
+
+	cout << "Мнимальная сумма - " << minSum << endl;
+	cout << "Удаляемый столбец - " << deleteColIndex << endl;
+
+	//в каждой i-той строке-векторе матрицы удаляем нужный элемент
+	cout << "Удаляем. . ." << endl;
+	for (int i = 0; i < dvec.size() - 1; i++) {
+		dvec[i].erase(dvec[i].begin() + deleteColIndex);
+	}
+	
+	cout << "В итоге получим Матрицу А:" << endl;
+	for (int i = 0; i < dvec.size(); i++) {
+		for (int j = 0; j < dvec.size() - 1; j++) {
+			cout << dvec[i][j] << "\t";
+		}
+		cout << endl;
+	}
+
+}
+
+
+
+int main() {
+	setlocale(LC_ALL, "ru");
+	srand(time(0));
+
+	vector<vector<int> > A;
+	int n;
+
+	cout << "Введи размерность матрицы: ";
+	cin >> n;
+
+
+	Fill(A,n);
+
+	cout << "Преобразование 1" << endl;
+	NegativeNumDiv(A);
+
+	cout << "Преобразование 2" << endl;
+	SpecialSort(A);
+
+	cout << "Преобразование 3" << endl;
+	AddSpecialLine(A);
+
+	cout << "Преобразование 4" << endl;
+	DeleteLineMaxZeroElementIndex(A);
+
+	cout << "Преобразование 5" << endl;
+	DeleteColumnWithMinSum(A);
+
+	system("pause");
+
+	return 0;
+}

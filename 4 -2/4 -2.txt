@@ -1,0 +1,89 @@
+//переделываем первую лабу используя:
+//последовательный контейнер STL - list
+
+
+#include <iostream>
+#include <list>
+#include <Windows.h>
+#include <algorithm>
+using namespace std;
+
+template <typename T>
+
+class spisok
+{
+private:
+
+    list<T> data;
+    list <int> ::iterator it;
+
+public:
+    
+    spisok() {}
+
+    void add(T item)
+    {
+        data.push_back(item);
+    }
+
+    // вывод списка
+    void print()
+    {
+        cout << "Список: " << endl;
+        for (it = data.begin(); it != data.end(); it++) {
+            cout << (*it) << ", ";
+        }
+        cout << endl;
+    }
+
+    //функция реверса
+    void Revers()
+    {
+        //сделал по приколу анимацию "загрузки" \(-.-)/
+        cout << "Реверс";
+        Sleep(1000);
+        cout << ". ";
+
+        Sleep(1000);
+        cout << ". ";
+
+        Sleep(1000);
+        cout << "." << endl;
+
+        reverse(data.begin(), data.end());
+    }
+
+    // деструктор
+    ~spisok()
+    {
+        data.clear();
+        cout << "Очищено!";
+    }
+};
+
+
+/*Напоминаю мое первое задание - 
+Сформировать  список,  содержащий  неубывающую последовательность чисел, и преобразовать его так, чтобы последовательность была невозрастающей
+короче говоря - реверснуть последовательность чисел*/
+
+int main()
+{
+    setlocale(LC_ALL, "ru");
+
+    //инициализируем стек
+    spisok<int> list;
+
+    //запаолняем стек
+    
+    for (int i = 0; i < 10; i++) {
+        list.add(i);
+    }
+
+    list.print();
+
+    list.Revers();
+
+    list.print();
+
+    return 0;
+}
