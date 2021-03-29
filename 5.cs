@@ -17,13 +17,41 @@ namespace _5
 {
     class Program
     {
+
+        static void Check(string str)
+        {
+            static void ctchExp(string st)
+            {
+                int d;
+                bool success = Int32.TryParse(st, out d);
+
+                if (!success)
+                    throw new FormatException();
+                
+                if (st == string.Empty || st == null)
+                    throw new ArgumentNullException();
+                
+                if (st.Length != 1 || d < 0 || d > 5)
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            try
+            {
+                ctchExp(str);
+            }
+            catch (ArgumentNullException m) { Console.WriteLine(m.Message); }
+            catch (FormatException m) { Console.WriteLine(m.Message); }
+            catch (OverflowException m) { Console.WriteLine(m.Message); }
+            catch (ArgumentOutOfRangeException m) { Console.WriteLine(m.Message); }
+        }
+
         static void Main()
         {
 
             Библиотека ДомашняяБиблиотека = new Библиотека();
 
             ДомашняяБиблиотека.Добавить("k", "Автор-1", "2020", "Жанр-1");
-            char d;
+            string a;
             bool f = true;
             while(f)
             {
@@ -35,25 +63,28 @@ namespace _5
                     "\n5 - Найти по названию");
 
                 Console.Write("Действие: ");
-                d = Char.Parse(Console.ReadLine());
-                switch(d)
+                a = Console.ReadLine();
+
+                Check(a);
+
+                switch(a)
                 {
-                    case '0':
+                    case "0":
                         f = false;
                         break;
-                    case '1':
+                    case "1":
                         ДомашняяБиблиотека.Добавить();
                         break;
-                    case '2':
+                    case "2":
                         ДомашняяБиблиотека.Инфо();
                         break;
-                    case '3':
+                    case "3":
                         ДомашняяБиблиотека.ВесьСписок();
                         break;
-                    case '4':
+                    case "4":
                         ДомашняяБиблиотека.Удалить();
                         break;
-                    case '5':
+                    case "5":
                         ДомашняяБиблиотека.Найти();
                         break;
                 }
