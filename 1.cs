@@ -38,10 +38,7 @@ namespace _6
 
                 return t.Name == Name && t.OneSecond == OneSecond && t.SubCount == SubCount;
             }
-            public override string ToString()
-            {
-                return "[Название: " + Name + " Количество абонентов: " + SubCount + " Стоимость секунды: " + OneSecond + "]";
-            }
+            public override string ToString() => "[Название: " + Name + " Количество абонентов: " + SubCount + " Стоимость секунды: " + OneSecond + "]";
         }
 
         class PerMinuteRate: Tariff
@@ -67,10 +64,7 @@ namespace _6
 
                 return t.Name == Name && t.OneMinute == OneMinute && t.SubCount == SubCount;
             }
-            public override string ToString()
-            {
-                return "[Название: " + Name + " Количество абонентов: " + SubCount + " Стоимость минуты: " + OneMinute + "]" ;
-            }
+            public override string ToString() => "[Название: " + Name + " Количество абонентов: " + SubCount + " Стоимость минуты: " + OneMinute + "]" ;
         }
 
         public class Subscriber
