@@ -9,6 +9,7 @@ namespace _6
         public class Company
         {
             public string Name { get; set; }
+            List<Tariff> Tariffs = new List<Tariff>;
             public Company(string n) => Name = n;
         }
 
